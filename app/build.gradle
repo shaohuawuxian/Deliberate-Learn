@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.chenenyu.router'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.zs.learnself"
-        minSdkVersion 21
+        applicationId "com.zs.learn"
+        minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -23,13 +24,14 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     testCompile 'junit:junit:4.12'
-
     compile 'org.litepal.android:core:1.5.1'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'org.byteam.superadapter:superadapter:3.6.7'
+    compile 'com.squareup.leakcanary:leakcanary-watcher:1.5.1'
 }
