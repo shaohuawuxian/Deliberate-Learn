@@ -1,7 +1,5 @@
 package com.zs.learn.english.view;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -29,7 +27,27 @@ public class EnglishAddActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.english_activity_addword);
         englishEdit=(EditText)findViewById(R.id.english_activity_addword_edittext_word);
         chineseEdit=(EditText)findViewById(R.id.english_activity_addword_edittext_annotation);
-        findViewById(R.id.english_activity_addword_button_save).setOnClickListener(this);
+        findViewById(R.id.english_activity_addword_button_save).setOnClickListener(
+                view->{
+                    String english=englishEdit.getText().toString();
+                    String chinese=chineseEdit.getText().toString();
+                    if(TextUtils.isEmpty(english)){
+                        Snackbar.make(view, "还没有输入单词", Snackbar.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(TextUtils.isEmpty(chinese)){
+                        Snackbar.make(view, "还没有输入对应汉语翻译", Snackbar.LENGTH_SHORT).show();
+                        return;
+                    }
+                    final EnglishWord englishWord=new EnglishWord();
+                    englishWord.word=english;
+                    englishWord.annotation=chinese;
+                    englishWord.saveAsync().listen(success -> {
+                        EventBus.getDefault().post(englishWord);
+                        finish();
+                    });
+                }
+        );
     }
 
     @Override

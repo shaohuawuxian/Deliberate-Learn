@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.chenenyu.router'
+apply plugin:'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -7,13 +8,16 @@ android {
 
     defaultConfig {
         applicationId "com.zs.learn"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {

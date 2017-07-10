@@ -1,19 +1,12 @@
 package com.zs.learn.english.view;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+
 import android.support.v4.app.ActivityOptionsCompat;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.chenenyu.router.Router;
 import com.zs.learn.R;
 import com.zs.learn.base.BaseFragment;
-
-import java.util.logging.Logger;
 
 /**
  * Created by shao on 2017/7/8.
