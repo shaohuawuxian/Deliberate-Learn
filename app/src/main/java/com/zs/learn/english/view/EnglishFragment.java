@@ -1,6 +1,7 @@
 package com.zs.learn.english.view;
 
 
+import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 
@@ -12,7 +13,7 @@ import com.zs.learn.base.BaseFragment;
  * Created by shao on 2017/7/8.
  */
 
-public class EnglishFragment extends BaseFragment implements View.OnClickListener{
+public class EnglishFragment extends BaseFragment{
 
 
     @Override
@@ -22,22 +23,19 @@ public class EnglishFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void initView() {
-        getView().findViewById(R.id.english_fragment_index_today).setOnClickListener(this);
-        getView().findViewById(R.id.english_fragment_index_week).setOnClickListener(this);
-        getView().findViewById(R.id.english_fragment_index_recall).setOnClickListener(this);
+        getView().findViewById(R.id.english_fragment_index_today)
+                .setOnClickListener(view -> {
+                    Router.build("wordlist")
+                            .with("dataType","day")
+                            .go(getActivity());
+                });
+        getView().findViewById(R.id.english_fragment_index_week)
+                .setOnClickListener(view->{
+                    Router.build("wordlist")
+                            .with("dataType","week")
+                            .go(getActivity());
+                });
+        getView().findViewById(R.id.english_fragment_index_recall).setOnClickListener(view->{});
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.english_fragment_index_today:
-                Router.build("wordlist").activityOptions(ActivityOptionsCompat.makeBasic()).go(getActivity());
-                break;
-            case R.id.english_fragment_index_week:
-                break;
-            case R.id.english_fragment_index_recall:
-                break;
-        }
-    }
 }

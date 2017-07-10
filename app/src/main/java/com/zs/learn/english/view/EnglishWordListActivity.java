@@ -18,6 +18,7 @@ import org.byteam.superadapter.SuperViewHolder;
 import org.greenrobot.eventbus.Subscribe;
 import org.litepal.crud.DataSupport;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -27,23 +28,14 @@ import java.util.List;
 public class EnglishWordListActivity extends BaseActivity{
     RecyclerView mRecyclerView;
     WordListAdapter mListAdapter;
+    String dataType;
     @Override
     protected void initView() {
         setContentView(R.layout.activity_wordlist);
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.wordlist_floating_add);
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Router.build("english_add").go(getApplicationContext());
-            }
-        });
+        fabAdd.setOnClickListener(view->Router.build("english_add").go(getApplicationContext()));
         FloatingActionButton fabTest = (FloatingActionButton) findViewById(R.id.wordlist_floating_test);
-        fabTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Router.build("english_test").go(getApplicationContext());
-            }
-        });
+        fabTest.setOnClickListener(view->Router.build("english_test").go(getApplicationContext()));
         mRecyclerView=(RecyclerView)findViewById(R.id.wordlist_recyclerview);
         mListAdapter=new WordListAdapter(getApplicationContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -52,10 +44,47 @@ public class EnglishWordListActivity extends BaseActivity{
 
     @Override
     protected void initData() {
-        int count=DataSupport.count(EnglishWord.class);
-        Snackbar.make(getWindow().getDecorView(), "count=="+count, Snackbar.LENGTH_SHORT).show();
-        List<EnglishWord> list=DataSupport.findAll(EnglishWord.class);
-        mListAdapter.addAll(list);
+        dataType=getIntent().getStringExtra("dataType");
+        List<EnglishWord> wordList=null;
+        Calendar c = Calendar.getInstance();
+        switch (dataType){
+            case "day":
+                c.set(Calendar.HOUR_OF_DAY, 0);
+                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.SECOND,0);
+                c.set(Calendar.MILLISECOND, 0);
+                long start=c.getTimeInMillis();
+                c.set(Calendar.HOUR_OF_DAY, 23);
+                c.set(Calendar.MINUTE, 59);
+                c.set(Calendar.SECOND,59);
+                c.set(Calendar.MILLISECOND, 999);
+                long end=c.getTimeInMillis();
+                wordList=DataSupport
+                        .where("insertTime>? and insertTime<?",String.valueOf(start),String.valueOf(end))
+                        .find(EnglishWord.class);
+                break;
+            case "week":
+                c.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);//周日
+                c.set(Calendar.HOUR_OF_DAY, 0);
+                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.SECOND,0);
+                c.set(Calendar.MILLISECOND, 0);
+                long startWeek=c.getTimeInMillis();
+                c.set(Calendar.DAY_OF_WEEK,Calendar.SATURDAY);//周六
+                c.set(Calendar.HOUR_OF_DAY, 23);
+                c.set(Calendar.MINUTE, 59);
+                c.set(Calendar.SECOND,59);
+                c.set(Calendar.MILLISECOND, 999);
+                long endWeek=c.getTimeInMillis();
+                wordList=DataSupport
+                        .where("insertTime>? and insertTime<?",String.valueOf(startWeek),String.valueOf(endWeek))
+                        .find(EnglishWord.class);
+                break;
+        }
+        if(wordList!=null){
+            mListAdapter.addAll(wordList);
+        }
+
     }
 
     @Subscribe

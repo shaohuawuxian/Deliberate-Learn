@@ -17,11 +17,9 @@ import org.litepal.crud.callback.SaveCallback;
  * Created by shao on 2017/7/8.
  */
 @Route("english_add")
-public class EnglishAddActivity extends BaseActivity implements View.OnClickListener{
+public class EnglishAddActivity extends BaseActivity{
 
     EditText englishEdit,chineseEdit;
-
-
     @Override
     protected void initView() {
         setContentView(R.layout.english_activity_addword);
@@ -35,6 +33,7 @@ public class EnglishAddActivity extends BaseActivity implements View.OnClickList
                         Snackbar.make(view, "还没有输入单词", Snackbar.LENGTH_SHORT).show();
                         return;
                     }
+
                     if(TextUtils.isEmpty(chinese)){
                         Snackbar.make(view, "还没有输入对应汉语翻译", Snackbar.LENGTH_SHORT).show();
                         return;
@@ -53,36 +52,5 @@ public class EnglishAddActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void initData() {
 
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.english_activity_addword_button_save://sava
-                String english=englishEdit.getText().toString();
-                String chinese=chineseEdit.getText().toString();
-                if(TextUtils.isEmpty(english)){
-                    Snackbar.make(v, "还没有输入单词", Snackbar.LENGTH_SHORT).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(chinese)){
-                    Snackbar.make(v, "还没有输入对应汉语翻译", Snackbar.LENGTH_SHORT).show();
-                    return;
-                }
-                final EnglishWord englishWord=new EnglishWord();
-                englishWord.word=english;
-                englishWord.annotation=chinese;
-                englishWord.saveAsync().listen(new SaveCallback() {
-                    @Override
-                    public void onFinish(boolean success) {
-                        EventBus.getDefault().post(englishWord);
-                        finish();
-                        //Snackbar.make(getWindow().getDecorView(), "success="+success, Snackbar.LENGTH_SHORT).show();
-                    }
-                });
-//                EventBus.getDefault().post(englishWord);
-//                finish();
-                break;
-        }
     }
 }
