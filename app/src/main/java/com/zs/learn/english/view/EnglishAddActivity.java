@@ -2,8 +2,8 @@ package com.zs.learn.english.view;
 
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.chenenyu.router.annotation.Route;
 import com.zs.learn.R;
@@ -11,20 +11,24 @@ import com.zs.learn.base.BaseActivity;
 import com.zs.learn.english.model.EnglishWord;
 
 import org.greenrobot.eventbus.EventBus;
-import org.litepal.crud.callback.SaveCallback;
 
 /**
  * Created by shao on 2017/7/8.
+ * 金山词霸查词url:http://dict-co.iciba.com/api/dictionary.php?w=go&key=ACFC93FF5988E38CCD2BE9A9277B9A74
  */
 @Route("english_add")
 public class EnglishAddActivity extends BaseActivity{
 
     EditText englishEdit,chineseEdit;
+
     @Override
     protected void initView() {
+        //YouDaoApplication.init(getApplicationContext(), "02120e853427b161");
         setContentView(R.layout.english_activity_addword);
         englishEdit=(EditText)findViewById(R.id.english_activity_addword_edittext_word);
         chineseEdit=(EditText)findViewById(R.id.english_activity_addword_edittext_annotation);
+
+
         findViewById(R.id.english_activity_addword_button_save).setOnClickListener(
                 view->{
                     String english=englishEdit.getText().toString();

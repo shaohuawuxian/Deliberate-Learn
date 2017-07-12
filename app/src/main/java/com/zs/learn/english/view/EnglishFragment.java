@@ -1,9 +1,6 @@
 package com.zs.learn.english.view;
 
 
-import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.view.View;
 
 import com.chenenyu.router.Router;
 import com.zs.learn.R;
