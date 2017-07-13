@@ -12,6 +12,8 @@ public class EnglishWord extends DataSupport {
     public String word=null;//单词
     public String phonogram;//音标
 
+    public String readUrl;//mp3地址
+
     public long insertTime=System.currentTimeMillis();//写入时间
     public String annotation;//注释
 
