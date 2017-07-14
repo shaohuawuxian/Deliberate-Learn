@@ -10,7 +10,7 @@ import com.zs.learn.R;
 import com.zs.learn.base.BaseActivity;
 import com.zs.learn.english.model.EnglishWord;
 import com.zs.learn.english.model.EnglishWordXml;
-import com.zs.learn.retrofit.EnglishWordApi;
+import com.zs.learn.retrofit.AppApi;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xml.sax.SAXException;
@@ -58,7 +58,7 @@ public class EnglishAddActivity extends BaseActivity{
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl("http://dict-co.iciba.com/api/")
                             .build();
-                    EnglishWordApi api= retrofit.create(EnglishWordApi.class);
+                    AppApi api= retrofit.create(AppApi.class);
                     Call<ResponseBody> call = api.getEnglishWord(english);
                     call.enqueue(new Callback<ResponseBody>() {
                         @Override
