@@ -32,6 +32,12 @@ public class EnglishFragment extends BaseFragment{
                             .with("dataType","week")
                             .go(getActivity());
                 });
+        getView().findViewById(R.id.english_fragment_index_month)
+                .setOnClickListener(view->{
+                    Router.build("wordlist")
+                            .with("dataType","month")
+                            .go(getActivity());
+                });
         getView().findViewById(R.id.english_fragment_index_recall).setOnClickListener(view->{});
     }
 

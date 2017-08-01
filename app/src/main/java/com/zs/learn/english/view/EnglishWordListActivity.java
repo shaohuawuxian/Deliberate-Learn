@@ -79,7 +79,7 @@ public class EnglishWordListActivity extends BaseActivity{
         Calendar c = Calendar.getInstance();
         int month=c.get(Calendar.MONTH);
         int day=c.get(Calendar.DAY_OF_MONTH);
-        String todayStr=c.get(Calendar.YEAR)+"-"+(month<10?"0":"")+month+"-"+(day<10?"0":"")+day;
+        String todayStr=c.get(Calendar.YEAR)+"-"+((month+1)<10?"0":"")+(month+1)+"-"+(day<10?"0":"")+day;
         DailySentence dailySentence=DataSupport.where("date=?",todayStr).findFirst(DailySentence.class);
         if(dailySentence==null){
             Retrofit retrofit = new Retrofit.Builder()
@@ -97,7 +97,7 @@ public class EnglishWordListActivity extends BaseActivity{
                         sentence.note=jsonObject.optString("note");
                         sentence.imageUrl=jsonObject.optString("picture2");
                         sentence.date=jsonObject.optString("dateline");
-                        sentence.saveAsync();
+                        sentence.save();
                         showCollapseContent(sentence);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -129,7 +129,7 @@ public class EnglishWordListActivity extends BaseActivity{
                 c.set(Calendar.MILLISECOND, 999);
                 long end=c.getTimeInMillis();
                 wordList=DataSupport.
-                        where("insertTime>? and insertTime<?",String.valueOf(start),String.valueOf(end))
+                        where("insertTime>=? and insertTime<=?",String.valueOf(start),String.valueOf(end))
                         .find(EnglishWord.class);
                 break;
             case "week":
@@ -147,8 +147,28 @@ public class EnglishWordListActivity extends BaseActivity{
                 c.set(Calendar.MILLISECOND, 999);
                 long endWeek=c.getTimeInMillis();
                 wordList=
-                        where("insertTime>? and insertTime<?",String.valueOf(startWeek),String.valueOf(endWeek))
+                        where("insertTime>=? and insertTime<=?",String.valueOf(startWeek),String.valueOf(endWeek))
                         .find(EnglishWord.class);
+                break;
+            case "month":
+                mCollapsingToolbarLayout.setTitle("本月单词");
+                c.set(Calendar.DAY_OF_MONTH,0);
+                c.set(Calendar.HOUR_OF_DAY, 0);
+                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.SECOND,0);
+                c.set(Calendar.MILLISECOND, 0);
+                long startMonth=c.getTimeInMillis();
+                int currentMonth=c.get(Calendar.DAY_OF_MONTH);
+                c.set(Calendar.MONTH,currentMonth==Calendar.DECEMBER?Calendar.JANUARY:currentMonth+1);
+                c.set(Calendar.DAY_OF_MONTH,0);
+                c.set(Calendar.HOUR_OF_DAY, 0);
+                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.SECOND,0);
+                c.set(Calendar.MILLISECOND, 0);
+                long endMonth=c.getTimeInMillis();
+                wordList=
+                        where("insertTime>=? and insertTime<?",String.valueOf(startMonth),String.valueOf(endMonth))
+                                .find(EnglishWord.class);
                 break;
         }
         mCollapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);//设置展开时状态下字体颜色
@@ -192,6 +212,12 @@ public class EnglishWordListActivity extends BaseActivity{
                 holder.setText(R.id.english_item_wordlist_phonogram,item.phonogram);
             }
             holder.setText(R.id.english_item_wordlist_annotation,item.annotation);
+            holder.setVisibility(R.id.english_item_wordlist_voice,View.GONE);//优先级比较低，暂时不支持
+//            if(TextUtils.isEmpty(item.readUrl)){
+//                holder.setVisibility(R.id.english_item_wordlist_voice,View.GONE);
+//            }else{
+//                holder.setVisibility(R.id.english_item_wordlist_voice,View.VISIBLE);
+//            }
         }
     }
 }

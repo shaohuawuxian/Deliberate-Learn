@@ -1,5 +1,7 @@
 package com.zs.learn.english.view;
 
+import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +40,7 @@ public class EnglishAddActivity extends BaseActivity{
 
     EditText englishEdit;
     TextView textWord,textPhonogram,textAnnotation;
-    Button buttonSearch,buttonSave;
+    Button buttonSearch,buttonSave,buttonReset;
 
     EnglishWord mEnglishWord;
     @Override
@@ -51,14 +53,20 @@ public class EnglishAddActivity extends BaseActivity{
         textAnnotation=(TextView)findViewById(R.id.english_activity_addword_textview_annotation);
         buttonSearch=(Button)findViewById(R.id.english_activity_addword_button_search);
         buttonSave=(Button)findViewById(R.id.english_activity_addword_button_save);
+        buttonReset=(Button)findViewById(R.id.english_activity_addword_button_reset);
         buttonSearch.setOnClickListener(
                 view->{
                     String english=englishEdit.getText().toString();
+                    if(TextUtils.isEmpty(english)){
+                        Snackbar.make(getWindow().getDecorView(),"请输入单词",Snackbar.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                    Retrofit retrofit = new Retrofit.Builder()
+                    //AppApi api=RetrofitUtils.easy("http://dict-co.iciba.com/api/",AppApi.class);
+                    AppApi api=new Retrofit.Builder()
                             .baseUrl("http://dict-co.iciba.com/api/")
-                            .build();
-                    AppApi api= retrofit.create(AppApi.class);
+                            .build()
+                            .create(AppApi.class);
                     Call<ResponseBody> call = api.getEnglishWord(english);
                     call.enqueue(new Callback<ResponseBody>() {
                         @Override
@@ -74,6 +82,7 @@ public class EnglishAddActivity extends BaseActivity{
                                 textAnnotation.setText(mEnglishWord.annotation);
                                 buttonSearch.setVisibility(View.GONE);
                                 buttonSave.setVisibility(View.VISIBLE);
+                                buttonReset.setVisibility(View.VISIBLE);
                             } catch (ParserConfigurationException e) {
                                 e.printStackTrace();
                             } catch (SAXException e) {
@@ -98,7 +107,15 @@ public class EnglishAddActivity extends BaseActivity{
                     finish();
                 });
             }
-
+        });
+        buttonReset.setOnClickListener(v -> {
+            englishEdit.setText("");
+            buttonSave.setVisibility(View.GONE);
+            buttonReset.setVisibility(View.GONE);
+            buttonSearch.setVisibility(View.VISIBLE);
+            textWord.setText("");
+            textPhonogram.setText("");
+            textAnnotation.setText("");
         });
     }
 

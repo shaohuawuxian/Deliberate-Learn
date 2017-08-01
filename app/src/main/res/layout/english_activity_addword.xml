@@ -39,11 +39,18 @@
 
 
     <Button
+        android:id="@+id/english_activity_addword_button_reset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="重置"
+        android:layout_marginTop="32dp"
+        android:visibility="gone"/>
+    <Button
         android:id="@+id/english_activity_addword_button_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="保存"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:visibility="gone"/>
 
 </LinearLayout>

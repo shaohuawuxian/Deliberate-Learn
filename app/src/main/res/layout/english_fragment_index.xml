@@ -4,13 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
+    <!--android:background="#00bbcc"
 
+    -->
     <Button
         android:id="@+id/english_fragment_index_today"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="今日单词"
-        android:background="#00bbcc"
+        android:background="@drawable/ripple_button_00bbcc"
         android:elevation="8dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"/>
@@ -20,7 +22,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="本周单词"
-        android:background="#00bbcc"
+        android:background="@drawable/ripple_button_00bbcc"
+        android:elevation="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"/>
+    <Button
+        android:id="@+id/english_fragment_index_month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="本月单词"
+        android:background="@drawable/ripple_button_00bbcc"
         android:elevation="8dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"/>
@@ -30,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="回想(All)"
-        android:background="#00bbcc"
+        android:background="@drawable/ripple_button_00bbcc"
         android:elevation="8dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"/>
