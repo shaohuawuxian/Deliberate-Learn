@@ -8,8 +8,8 @@
             android:title="Android" />
         <item android:id="@+id/nav_codeview" android:icon="@drawable/ic_menu_slideshow"
             android:title="CodeView" />
-        <item android:id="@+id/nav_manage" android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+        <item android:id="@+id/nav_design" android:icon="@drawable/ic_menu_manage"
+            android:title="设计模式" />
     </group>
 
     <item android:title="Communicate">

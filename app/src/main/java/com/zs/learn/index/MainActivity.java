@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 
 import com.zs.learn.R;
 import com.zs.learn.codeview.view.CodeViewMainFragment;
+import com.zs.learn.designpattern.DesignPatternMainFragment;
 import com.zs.learn.english.view.EnglishFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -104,8 +105,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_codeview) {
             replaceFragment(new CodeViewMainFragment());
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_design) {
+            replaceFragment(new DesignPatternMainFragment());
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
