@@ -1,9 +1,11 @@
 package com.zs.learn.designpattern;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -62,6 +64,13 @@ public class DesignPatternListActivity extends BaseActivity {
         @Override
         public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, DesignPattern item) {
                 holder.setText(R.id.designpattern_item_name,item.name);
+                holder.itemView.setOnClickListener(view->{
+                    Bundle bundle=new Bundle();
+                    bundle.putParcelable("dp",item);
+                    Router.build("designpattern_detail")
+                            .with(bundle)
+                            .go(getContext());
+                });
         }
     }
 }
